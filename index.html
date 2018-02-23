@@ -1,93 +1,98 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<title>Terminal Controller - Siwarak UnGreanable</title>
-		<link rel="stylesheet" href="themes/Bootstrap.css">
-		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile.structure-1.4.0.min.css" />
-		<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
-		<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-		<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
-		<script type="text/javascript">
-            function SendCommand(element) {
-				if($(element).attr('id') == "freezeAfterTP") {
-					$.ajax({
-						url: "process.php",
-						method: "get",
-						dataType: 'json',
-						data: {
-							command: $(element).attr('id'),
-							setValue: $(element).val()
-						},
-						success:function(data){
-							location.reload();
-						}
-					});
-				} else {
-					$.ajax({
-						url: "process.php",
-						method: "get",
-						dataType: 'json',
-						data: {
-							command: $(element).attr('id')
-						},
-						success:function(data){
-							$(element).attr('disabled',false);
-							$("#log").html(data.output);
-						}
-					});
-				}
-            }
 
-            $(document).ready(function() {
-				
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Terminal Controller - Siwarak UnGreanable</title>
+	<link rel="stylesheet" href="themes/Bootstrap.css">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile.structure-1.4.0.min.css" />
+	<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+	<script type="text/javascript">
+		function SendCommand(element) {
+			if ($(element).attr('id') == "freezeAfterTP") {
 				$.ajax({
-                    url: "process.php",
-                    method: "get",
-                    dataType: 'json',
-                    data: {
-                        command: 'freezeAfterTP'
-                    },
-                    success:function(data){
-						if(data == "1") {
-							$('#freezeAfterTP').buttonMarkup({theme: 'a'});
-							$('#freezeAfterTP').html("Toggle FreezeAfterTP (Current: TRUE)");
-							$('#freezeAfterTP').val('0');
-						}
-						else if(data == "0") {
-							$('#freezeAfterTP').buttonMarkup({theme: 'b'});
-							$('#freezeAfterTP').html("Toggle FreezeAfterTP (Current: FALSE)");
-							$('#freezeAfterTP').val('1');
-						}
-                    }
-                });
-				
-                $('button').click(function() {
-					$(this).attr('disabled',true);
-					SendCommand($(this));
-                });
-            });
-        </script>
-	</head>
-	<body>
-		<div data-role="page" data-theme="a">
-			<div data-role="header" data-position="inline">
-				<h1>Siwarak UnGreanable</h1>
-				<div data-role="navbar">
-					<ul>
-						<li><a href="#" data-icon="gear" class="ui-btn-active">Terminal Controller</a></li>
-					</ul>
-				</div>
-			</div>
-			<div data-role="content" data-theme="a">
-				<button id="startTerminal" data-role="button" data-theme="d" data-icon="check">Start All Terminal</button>
-				<button id="killTerminal" data-role="button" data-theme="c" data-icon="delete">Kill All Terminal</button>
-				<button id="toggleEA" data-role="button" data-theme="e" data-icon="gear">Toggle Expert Advisors</button>
-				<button id="freezeAfterTP" data-role="button" data-theme="b" data-icon="gear">Toggle FreezeAfterTP</button>
-				<p id="log"></p>
+					url: "process.php",
+					method: "get",
+					dataType: 'json',
+					data: {
+						command: $(element).attr('id'),
+						setValue: $(element).val()
+					},
+					success: function (data) {
+						location.reload();
+					}
+				});
+			} else {
+				$.ajax({
+					url: "process.php",
+					method: "get",
+					dataType: 'json',
+					data: {
+						command: $(element).attr('id')
+					},
+					success: function (data) {
+						$(element).attr('disabled', false);
+						$("#log").html(data.output);
+					}
+				});
+			}
+		}
+
+		$(document).ready(function () {
+
+			$.ajax({
+				url: "process.php",
+				method: "get",
+				dataType: 'json',
+				data: {
+					command: 'freezeAfterTP'
+				},
+				success: function (data) {
+					if (data == "1") {
+						$('#freezeAfterTP').buttonMarkup({ theme: 'a' });
+						$('#freezeAfterTP').html("Toggle FreezeAfterTP (Current: TRUE)");
+						$('#freezeAfterTP').val('0');
+					}
+					else if (data == "0") {
+						$('#freezeAfterTP').buttonMarkup({ theme: 'b' });
+						$('#freezeAfterTP').html("Toggle FreezeAfterTP (Current: FALSE)");
+						$('#freezeAfterTP').val('1');
+					}
+				}
+			});
+
+			$('button').click(function () {
+				$(this).attr('disabled', true);
+				SendCommand($(this));
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<div data-role="page" data-theme="a">
+		<div data-role="header" data-position="inline">
+			<h1>Siwarak UnGreanable</h1>
+			<div data-role="navbar">
+				<ul>
+					<li>
+						<a href="#" data-icon="gear" class="ui-btn-active">Terminal Controller</a>
+					</li>
+				</ul>
 			</div>
 		</div>
-		
-	</body>
+		<div data-role="content" data-theme="a">
+			<button id="startTerminal" data-role="button" data-theme="d" data-icon="check">Start All Terminal</button>
+			<button id="killTerminal" data-role="button" data-theme="c" data-icon="delete">Kill All Terminal</button>
+			<button id="toggleEA" data-role="button" data-theme="e" data-icon="gear">Toggle Expert Advisors</button>
+			<button id="freezeAfterTP" data-role="button" data-theme="b" data-icon="gear">Toggle FreezeAfterTP</button>
+			<p id="log"></p>
+		</div>
+	</div>
+
+</body>
+
 </html>
