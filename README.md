@@ -8,3 +8,6 @@ Control your Terminal by TerminalController
 You can download EA at #1
 
 #1 http://forextraderportal.com/forex-grid-trader-ea-making-money-from-your-bed/
+
+# Screenshot
+![Settings Window](https://raw.githubusercontent.com/ungreanable/TerminalController/master/terminalcontroller.png)
