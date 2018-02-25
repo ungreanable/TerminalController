@@ -1,5 +1,5 @@
-# ForexController
-Controller your Terminal by ForexController
+# TerminalController
+Control your Terminal by TerminalController
 - Start All Terminal
 - Kill All Terminal
 - Toggle Expert Advisors (EA)
