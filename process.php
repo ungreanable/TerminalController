@@ -1,9 +1,12 @@
 <?php
+
+define('YOUR_KEY','CHANGE_YOUR_KEY_HERE');
+
 $command = $_GET['command'];
 $my_file = 'settings/settings.txt';
 if(isset($_GET['key'])) {
 	$key = $_GET['key'];
-	if($key == "") {
+	if($key == YOUR_KEY) {
 		if($command == "startTerminal") {
 			$result['output'] = shell_exec("bin\start terminal.bat");
 		} else if($command == "killTerminal") {
@@ -17,6 +20,8 @@ if(isset($_GET['key'])) {
 				$result['output'] = $_GET['setValue'];
 				fclose($handle);
 			}
+		} else if($command == "check") {
+			$result['output'] = "OK";
 		}
 	} else $result['output'] = "R U OK ?";
 } else if($command == "freezeAfterTP" && !isset($_GET['setValue'])) {
