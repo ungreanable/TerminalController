@@ -11,7 +11,7 @@
 	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
 	<script type="text/javascript">
-		function SendCommand(element) {
+		function SendCommand(element,keycode) {
 			if ($(element).attr('id') == "freezeAfterTP") {
 				$.ajax({
 					url: "process.php",
@@ -19,10 +19,12 @@
 					dataType: 'json',
 					data: {
 						command: $(element).attr('id'),
-						setValue: $(element).val()
+						setValue: $(element).val(),
+						key: keycode
 					},
 					success: function (data) {
-						location.reload();
+						if(data.output == "R U OK ?") location.href = "http://www.facebook.com";
+						else location.reload();
 					}
 				});
 			} else {
@@ -31,11 +33,15 @@
 					method: "get",
 					dataType: 'json',
 					data: {
-						command: $(element).attr('id')
+						command: $(element).attr('id'),
+						key: keycode
 					},
 					success: function (data) {
-						$(element).attr('disabled', false);
-						$("#log").html(data.output);
+						if(data.output == "R U OK ?") location.href = "http://www.facebook.com";
+						else {
+							$(element).attr('disabled', false);
+							$("#log").html(data.output);
+						}
 					}
 				});
 			}
@@ -53,20 +59,23 @@
 				success: function (data) {
 					if (data == "1") {
 						$('#freezeAfterTP').buttonMarkup({ theme: 'a' });
-						$('#freezeAfterTP').html("Toggle FreezeAfterTP (Current: TRUE)");
+						$('#freezeAfterTP').html("Toggle FreezeAfterTP (Current: ENABLE)");
 						$('#freezeAfterTP').val('0');
 					}
 					else if (data == "0") {
 						$('#freezeAfterTP').buttonMarkup({ theme: 'b' });
-						$('#freezeAfterTP').html("Toggle FreezeAfterTP (Current: FALSE)");
+						$('#freezeAfterTP').html("Toggle FreezeAfterTP (Current: DISABLE)");
 						$('#freezeAfterTP').val('1');
 					}
 				}
 			});
 
 			$('button').click(function () {
-				$(this).attr('disabled', true);
-				SendCommand($(this));
+				var keycode = prompt("Please enter the key: ");
+				if (keycode != null && keycode != "") {
+					$(this).attr('disabled', true);
+					SendCommand($(this),keycode);
+				} else alert("...");
 			});
 		});
 	</script>
